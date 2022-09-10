@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost/sda_j113_spring?serverTimezone=Europe/Warsaw&createDatabaseIfNotExist=true
+  jpa:
+    hibernate:
+      # liquibase / flyway
+      ddl-auto: update
