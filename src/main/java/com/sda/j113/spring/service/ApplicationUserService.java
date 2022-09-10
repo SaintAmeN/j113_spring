@@ -1,6 +1,8 @@
 package com.sda.j113.spring.service;
 
 import com.sda.j113.spring.model.ApplicationUser;
+import com.sda.j113.spring.model.dto.ApplicationUserDTO;
+import com.sda.j113.spring.model.dto.CreateUserRequest;
 
 import java.util.List;
 
@@ -10,6 +12,6 @@ import java.util.List;
  * @created 10.09.2022
  */
 public interface ApplicationUserService {
-    ApplicationUser addUser(ApplicationUser user);
-    List<ApplicationUser> listUsers();
+    ApplicationUserDTO addUser(CreateUserRequest request);
+    List<ApplicationUserDTO> listUsers();
 }
