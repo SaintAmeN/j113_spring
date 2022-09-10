@@ -27,10 +27,10 @@ public class Product {
     private String name;
 
     @CreationTimestamp
-    private LocalDateTime createDateTime;
+    private LocalDateTime createDateTime; // now()
 
     @UpdateTimestamp
-    private LocalDateTime updateDateTime;
+    private LocalDateTime updateDateTime; // now()
 
     @Enumerated(EnumType.STRING)
     private ProductState state;
