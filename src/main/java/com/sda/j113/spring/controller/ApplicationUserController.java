@@ -29,12 +29,14 @@ public class ApplicationUserController {
     // Update -> Put, Patch [*Post]
     // Delete -> Delete
     @GetMapping()
+    @CrossOrigin()
     @ResponseStatus(HttpStatus.OK)
     public List<ApplicationUserDTO> getListOfUsers(){
         return applicationUserService.listUsers();
     }
 
     @PostMapping()
+    @CrossOrigin()
     @ResponseStatus(HttpStatus.CREATED)
     public ApplicationUserDTO postNewUser(@RequestBody CreateUserRequest request){
         return applicationUserService.addUser(request);

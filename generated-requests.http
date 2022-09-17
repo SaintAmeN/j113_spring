@@ -1,0 +1,117 @@
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Jabłko",
+  "state": "USED"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Masło",
+  "state": "BRAND_NEW"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Tesla",
+  "state": "USED"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Komputer",
+  "state": "BRAND_NEW"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Kawa",
+  "state": "USED"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Monitor",
+  "state": "USED"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Pizza",
+  "state": "USED"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Hamburger",
+  "state": "BRAND_NEW"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Hamburg",
+  "state": "USED"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Frytki",
+  "state": "USED"
+}
+
+###
+POST http://localhost:8080/api/product/1
+Content-Type: application/json
+
+{
+  "name": "Mydło",
+  "state": "BRAND_NEW"
+}
+
+
+###
+GET http://localhost:8080/api/user
+
+
+###
+GET http://localhost:8080/api/product
+
+###
+GET http://localhost:8080/api/product?size=3
+
+###
+GET http://localhost:8080/api/product?size=3&page=1
+
+
+###
+GET http://localhost:8080/api/product?size=3&page=3
