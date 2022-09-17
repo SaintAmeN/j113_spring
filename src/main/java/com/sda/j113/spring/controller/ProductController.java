@@ -30,6 +30,12 @@ public class ProductController {
         return productService.addProduct(userId, request);
     }
 
+    @PostMapping()
+    public ProductDTO addProductWithRequestParam(@RequestParam Long userId,
+                                                 @RequestBody CreateProductRequest request) {
+        return productService.addProduct(userId, request);
+    }
+
     // http://localhost:8080/api/product                    (page=0, size=10)
     // http://localhost:8080/api/product?page=1             (page=1, size=10)
     // http://localhost:8080/api/product?size=30&page=0     (page=0, size=30)
