@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -66,6 +67,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean deleteProduct(Long productId) {
-        return false;
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isEmpty()){
+            return false;
+        }
+        productRepository.deleteById(productId);
+        return true;
     }
 }

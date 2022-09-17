@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -44,4 +46,20 @@ public class ProductController {
             return productService.getAllProducts(PageRequest.of(page, size));
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProductById(@PathVariable Long id) {
+        boolean result = productService.deleteProduct(id);
+        if (result) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+    }
+
+//    @DeleteMapping
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+//    public Boolean deleteProductById(Long id) {
+//        return productService.deleteProduct(id);
+//    }
 }
