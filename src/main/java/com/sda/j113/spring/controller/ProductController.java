@@ -34,13 +34,14 @@ public class ProductController {
     // http://localhost:8080/api/product?page=0&size=30     (page=0, size=30)
     // http://localhost:8080/api/product?size=40            (page=0, size=40)
     @GetMapping()
-    public Page<ProductDTO> getAllProducts(
+    public Page<ProductDTO> getAllUserProducts(
+            @RequestParam(required = false) Long userId,
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer size) {
-
-        return productService.getAllProducts(PageRequest.of(page, size));
-//                        page == null ? 0 : page,
-//                        size == null ? 10 : size
-//                ));
+        if (userId != null) {
+            return productService.getUserProducts(userId, PageRequest.of(page, size));
+        } else {
+            return productService.getAllProducts(PageRequest.of(page, size));
+        }
     }
 }
