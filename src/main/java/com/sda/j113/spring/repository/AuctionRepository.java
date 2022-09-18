@@ -1,10 +1,8 @@
 package com.sda.j113.spring.repository;
 
 import com.sda.j113.spring.model.Auction;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import com.sda.j113.spring.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,4 +25,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
 //    long countAuctions();
 
 //    Page<Auction> findAllBy(PageRequest pageRequest);
+
+    List<Auction> findByProduct(Product product);
 }

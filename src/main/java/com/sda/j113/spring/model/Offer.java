@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @project j113_spring
  * @created 10.09.2022
  */
-@Data // getter // setter // toString // equalsAndHashCode // requiredArgsConstructor
+@Data
 @Entity
 @Builder
 @NoArgsConstructor

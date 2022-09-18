@@ -1,11 +1,19 @@
 package com.sda.j113.spring.service;
 
 import com.sda.j113.spring.model.ApplicationUser;
+import com.sda.j113.spring.model.Auction;
+import com.sda.j113.spring.model.Offer;
 import com.sda.j113.spring.model.Product;
 import com.sda.j113.spring.model.dto.CreateProductRequest;
 import com.sda.j113.spring.model.dto.ProductDTO;
+import com.sda.j113.spring.model.dto.ProductDetailsDTO;
+import com.sda.j113.spring.model.mapper.ApplicationUserMapper;
+import com.sda.j113.spring.model.mapper.AuctionMapper;
+import com.sda.j113.spring.model.mapper.OfferMapper;
 import com.sda.j113.spring.model.mapper.ProductMapper;
 import com.sda.j113.spring.repository.ApplicationUserRepository;
+import com.sda.j113.spring.repository.AuctionRepository;
+import com.sda.j113.spring.repository.OfferRepository;
 import com.sda.j113.spring.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +23,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,9 +38,15 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepository;
     private final ApplicationUserRepository applicationUserRepository;
+    private final ProductRepository productRepository;
+    private final AuctionRepository auctionRepository;
+    private final OfferRepository offerRepository;
+
+    private final ApplicationUserMapper applicationUserMapper;
     private final ProductMapper productMapper;
+    private final AuctionMapper auctionMapper;
+    private final OfferMapper offerMapper;
 
     @Override
     public ProductDTO addProduct(Long userId, CreateProductRequest request) {
@@ -73,5 +89,35 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.deleteById(productId);
         return true;
+    }
+
+    @Override
+    public ProductDetailsDTO getProductDetails(Long productId) {
+        // Product
+        Product product = productRepository.findById(productId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // User
+        ApplicationUser owner = product.getOwner();
+
+        // Aukcje
+        List<Auction> auctions = auctionRepository.findByProduct(product);
+
+        // Oferty
+        List<Offer> allOffersToAllAuctions = new ArrayList<>();
+        for (Auction auction : auctions) {
+            allOffersToAllAuctions.addAll(offerRepository.findAllByAuction(auction));
+        }
+
+        return ProductDetailsDTO.builder()
+                .product(productMapper.mapProductToDTO(product))
+                .owner(applicationUserMapper.mapApplicationUserToDTO(owner))
+                .auctions(auctions.stream()
+                        .map(auctionMapper::mapAuctionToDTO)
+                        .collect(Collectors.toList()))
+                .offers(allOffersToAllAuctions.stream()
+                        .map(offerMapper::mapProductToDTO)
+                        .collect(Collectors.toList()))
+                .build();
     }
 }

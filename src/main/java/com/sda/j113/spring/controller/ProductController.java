@@ -2,6 +2,7 @@ package com.sda.j113.spring.controller;
 
 import com.sda.j113.spring.model.dto.CreateProductRequest;
 import com.sda.j113.spring.model.dto.ProductDTO;
+import com.sda.j113.spring.model.dto.ProductDetailsDTO;
 import com.sda.j113.spring.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ProductDTO addProductWithRequestParam(@RequestParam Long userId,
+    public ProductDTO addProductWithRequestParam(@RequestParam(defaultValue = "1") Long userId,
                                                  @RequestBody CreateProductRequest request) {
         return productService.addProduct(userId, request);
     }
@@ -68,4 +69,14 @@ public class ProductController {
 //    public Boolean deleteProductById(Long id) {
 //        return productService.deleteProduct(id);
 //    }
+
+    // Co najmniej 1 user
+    // Co najmniej 1 product powiązany z tym użytkownikiem
+    // (optional) 1 auction powiązany z produktem (powyżej)
+    // (optional) drugi user (inny niż 1) + jedna oferta usera 2 na auction (powyżej)
+    @GetMapping("/{identifier}")
+    public ProductDetailsDTO getDetails(@PathVariable(name = "identifier") Long id) {
+        log.info("Requested details of product with id: " + id);
+        return productService.getProductDetails(id);
+    }
 }
