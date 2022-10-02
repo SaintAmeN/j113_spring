@@ -1,6 +1,7 @@
 package com.sda.j113.spring.controller;
 
 import com.sda.j113.spring.model.dto.AuctionDTO;
+import com.sda.j113.spring.model.dto.CreateAuctionRequest;
 import com.sda.j113.spring.service.AuctionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,5 +29,10 @@ public class AuctionController {
         return auctionService.findAll(PageRequest.of(page, size));
     }
 
+    @PostMapping()
+    public AuctionDTO create(@RequestBody CreateAuctionRequest request){
+        log.info(String.format("Creating auction: %s", request));
+        return auctionService.createAuction(request);
+    }
 
 }

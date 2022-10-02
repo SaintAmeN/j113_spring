@@ -1,6 +1,7 @@
 package com.sda.j113.spring.service;
 
 import com.sda.j113.spring.model.Auction;
+import com.sda.j113.spring.model.Product;
 import com.sda.j113.spring.model.dto.AuctionDTO;
 import com.sda.j113.spring.model.dto.CreateAuctionRequest;
 import com.sda.j113.spring.model.mapper.AuctionMapper;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.stream.Collectors;
 
 // @Component
@@ -52,10 +54,14 @@ public class AuctionServiceImpl implements AuctionService{
                 .collect(Collectors.toList()), auctions.getPageable(), auctions.getTotalElements());
     }
 
-    // TODO: zadanie domowe: uzupełnić
-    // TODO: zadanie domowe: stworzyć controller (AuctionController) i dodać mapping do dodawania
     @Override
     public AuctionDTO createAuction(CreateAuctionRequest request) {
-        return null;
+        log.info("Creating auction from request: " + request);
+
+        Product auctionProduct = productRepository.findById(request.getProductId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        Auction savedAuction = auctionRepository.save(auctionMapper.mapCreateAuctionRequestToAuction(auctionProduct, request));
+        return auctionMapper.mapAuctionToDTO(savedAuction);
     }
 }
