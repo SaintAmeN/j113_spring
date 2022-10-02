@@ -4,20 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * @author Paweł Recław, AmeN
  * @project j113_spring
- * @created 10.09.2022
+ * @created 02.10.2022
+ * <p>
+ * Request:
+ * {
+ * "login": "XYZ",
+ * "pass": "ZYX"
+ * }
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationUserDTO {
-    private Long id;
+public class AuthenticationRequest {
     private String login;
-    private String name;
-    private String surname;
-    private List<String> roles;
+    private String pass;
 }

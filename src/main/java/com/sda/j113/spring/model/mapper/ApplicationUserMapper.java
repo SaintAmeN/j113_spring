@@ -13,7 +13,7 @@ import org.mapstruct.Mappings;
  * @project j113_spring
  * @created 10.09.2022
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = {java.util.stream.Collectors.class})
 public interface ApplicationUserMapper {
 
     @Mappings(value = {
@@ -33,6 +33,7 @@ public interface ApplicationUserMapper {
             @Mapping(source = "username", target = "login"),
             @Mapping(source = "firstName", target = "name"),
             @Mapping(source = "lastName", target = "surname"),
+            @Mapping(expression = "java(applicationUser.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList()))", target = "roles")
     })
     ApplicationUserDTO mapApplicationUserToDTO(ApplicationUser applicationUser);
 
