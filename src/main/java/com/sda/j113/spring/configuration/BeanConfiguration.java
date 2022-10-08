@@ -1,11 +1,7 @@
 package com.sda.j113.spring.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sda.j113.spring.filter.LoginFilter;
-import com.sda.j113.spring.model.mapper.ApplicationUserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -21,8 +17,15 @@ public class BeanConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
+//    @Bean
+//    public ObjectMapper objectMapper() {
+//        return new ObjectMapper().registerModule(new JavaTimeModule());
+//    }
+
+//    @Bean
+//    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+//        return jacksonObjectMapperBuilder -> {
+//
+//        };
+//    }
 }

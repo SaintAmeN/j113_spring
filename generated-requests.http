@@ -9,7 +9,8 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/api/product/2
+POST http://localhost:8080/api/product/1
+Authorization: Bearer:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2NjYwOTMzODh9.2-QLpEMvwP8W9CMW7qJO1h_Qi4FAkMMQsHWsGvNdCV9h-wbA6as_GJ7U6kH5yc2r9cv4cvqXdYjgCfhJ9jUZFw
 Content-Type: application/json
 
 {

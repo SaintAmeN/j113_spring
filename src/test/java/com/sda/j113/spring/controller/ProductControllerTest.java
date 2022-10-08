@@ -1,5 +1,6 @@
 package com.sda.j113.spring.controller;
 
+import com.sda.j113.spring.component.PrincipalComponent;
 import com.sda.j113.spring.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,12 +16,14 @@ import static org.mockito.Mockito.*;
 class ProductControllerTest {
 
     ProductService productService;          // mock
+    PrincipalComponent principalComponent;          // mock
     ProductController productController;
 
     @BeforeEach
     public void prepareEnvironment(){
         productService = mock(ProductService.class);
-        productController = new ProductController(productService);
+        principalComponent = mock(PrincipalComponent.class);
+        productController = new ProductController(productService, principalComponent);
     }
 
     @Test

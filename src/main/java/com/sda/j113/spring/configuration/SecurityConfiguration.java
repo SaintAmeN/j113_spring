@@ -9,9 +9,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true )
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
@@ -42,10 +45,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // dalej konfigurujemy autoryzację requestów
                     .authorizeRequests()
 //                        .antMatchers("/**").permitAll()
-                        .antMatchers("/api/test/public").permitAll()                // dostępny dla każdego
+                        .antMatchers(HttpMethod.GET, "/api/test/public").permitAll()                // dostępny dla każdego
                         .antMatchers("/api/test/anyone").authenticated()            // dla dowolnej osoby która jest zalogowana
                         .antMatchers("/api/test/moderator").hasRole("MODERATOR")    // dla dowolnej osoby która jest zalogowana z rolą moderator
                         .antMatchers("/api/test/admin").hasRole("ADMIN")            // dla dowolnej osoby która jest zalogowana z rolą admin
+                        .antMatchers("/api/test/secured").permitAll()               // weryfikacja uprawnień odbywa się w kontrolerze
                         .anyRequest().authenticated()
                 .and()
                     .addFilter(loginFilter(authenticationManager(), applicationUserMapper, objectMapper))       // /login

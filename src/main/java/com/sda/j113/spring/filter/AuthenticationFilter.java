@@ -47,6 +47,9 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
         chain.doFilter(request, response);
     }
 
+    // Opcja 1: dodajemy do tokena identyfikator, tutaj go czytamy z tokena i dodajemy do obiektu UsernamePasswordAuthenticationToken
+    // Opcja 2: po załadowaniu tokena (w tym miejscu) szukamy użytkownika w bazie i dodajemy id do obiektu UsernamePasswordAuthenticationToken
+    // ++++++ Opcja 3: po wywołaniu zapytania otrzymamy username który prześlemy do serwisu i tam poszukamy usera w bazie
     private UsernamePasswordAuthenticationToken verifyToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(TOKEN_SIGNING_KEY)

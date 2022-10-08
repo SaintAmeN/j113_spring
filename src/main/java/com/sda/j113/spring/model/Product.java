@@ -1,8 +1,10 @@
 package com.sda.j113.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,9 +29,11 @@ public class Product {
     private String name;
 
     @CreationTimestamp
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime createDateTime; // now()
 
     @UpdateTimestamp
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime updateDateTime; // now()
 
     @Enumerated(EnumType.STRING)

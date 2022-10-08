@@ -1,5 +1,6 @@
 package com.sda.j113.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -27,7 +28,10 @@ public class Auction {
     private String title;
     private BigDecimal initialPrice;
 
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime startDateTime;
+
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime endDateTime;
 
     @CreationTimestamp

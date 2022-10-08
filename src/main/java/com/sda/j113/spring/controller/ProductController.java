@@ -1,5 +1,6 @@
 package com.sda.j113.spring.controller;
 
+import com.sda.j113.spring.component.PrincipalComponent;
 import com.sda.j113.spring.model.dto.CreateProductRequest;
 import com.sda.j113.spring.model.dto.ProductDTO;
 import com.sda.j113.spring.model.dto.ProductDetailsDTO;
@@ -10,7 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 /**
  * @author Paweł Recław, AmeN
@@ -19,22 +25,28 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/product")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/product")
+@PreAuthorize("isAuthenticated()")
 public class ProductController {
     private final ProductService productService;
+    private final PrincipalComponent principalComponent;
 
     @PostMapping("/{id}")
-    public ProductDTO addProduct(@PathVariable(name = "id") Long userId,
-                                 @RequestBody CreateProductRequest request) {
-        return productService.addProduct(userId, request);
+    public ProductDTO addProduct(
+            @RequestBody CreateProductRequest request,
+            @PathVariable(name = "id") Long userId,
+            UsernamePasswordAuthenticationToken principal) {
+
+        return productService.addProduct(principalComponent.getUser(principal, userId).getId(), request);
     }
 
     @PostMapping()
-    public ProductDTO addProductWithRequestParam(@RequestParam(defaultValue = "1") Long userId,
-                                                 @RequestBody CreateProductRequest request) {
-        return productService.addProduct(userId, request);
+    public ProductDTO addProductWithRequestParam(@RequestParam Long userId,
+                                                 @RequestBody CreateProductRequest request,
+                                                 UsernamePasswordAuthenticationToken principal) {
+        return productService.addProduct(principalComponent.getUser(principal, userId).getId(), request);
     }
 
     // http://localhost:8080/api/product                    (page=0, size=10)

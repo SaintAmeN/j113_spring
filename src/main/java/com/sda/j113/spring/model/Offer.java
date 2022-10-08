@@ -1,5 +1,6 @@
 package com.sda.j113.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,6 +27,7 @@ public class Offer {
     private BigDecimal offerAmount;
 
     @CreationTimestamp
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime created;
 
     // Linked entities
