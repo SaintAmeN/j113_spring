@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 // dalej konfigurujemy autoryzację requestów
                     .authorizeRequests()
-                        .antMatchers("/**").permitAll()
+//                        .antMatchers("/**").permitAll()
                         .antMatchers("/api/test/public").permitAll()                // dostępny dla każdego
                         .antMatchers("/api/test/anyone").authenticated()            // dla dowolnej osoby która jest zalogowana
                         .antMatchers("/api/test/moderator").hasRole("MODERATOR")    // dla dowolnej osoby która jest zalogowana z rolą moderator
@@ -50,9 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .addFilter(loginFilter(authenticationManager(), applicationUserMapper, objectMapper))       // /login
                     .addFilter(new AuthenticationFilter(authenticationManager()))                               // nie /login
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                    .httpBasic();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     private LoginFilter loginFilter(AuthenticationManager authenticationManager,

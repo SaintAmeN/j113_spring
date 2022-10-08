@@ -50,7 +50,7 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken verifyToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(TOKEN_SIGNING_KEY)
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
 
         String username = claims.getSubject();

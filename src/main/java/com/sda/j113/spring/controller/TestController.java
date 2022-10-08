@@ -1,5 +1,6 @@
 package com.sda.j113.spring.controller;
 
+import com.sda.j113.spring.model.dto.MessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,22 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("/admin")
-    public String testAdmin() {
-        return "pong";
+    public MessageDTO testAdmin() {
+        return new MessageDTO("pong");
     }
 
     @GetMapping("/moderator")
-    public String testModerator() {
-        return "pong";
+    public MessageDTO testModerator() {
+        return new MessageDTO("pong");
     }
 
     @GetMapping("/anyone")
-    public String testAnyone() {
-        return "pong";
+    public MessageDTO testAnyone() {
+        return new MessageDTO("pong");
     }
 
     @GetMapping("/public")
-    public String testPublic() {
-        return "pong";
+    public MessageDTO testPublic() {
+        return new MessageDTO("pong");
     }
 }
