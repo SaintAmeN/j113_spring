@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.j113.spring.filter.AuthenticationFilter;
 import com.sda.j113.spring.filter.LoginFilter;
 import com.sda.j113.spring.model.mapper.ApplicationUserMapper;
+import com.sda.j113.spring.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -40,8 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 // dalej konfigurujemy autoryzację requestów
                     .authorizeRequests()
-                        .antMatchers("/api/public").permitAll()
-                        .antMatchers("/api/public/test").hasRole("ADMIN")
+                        .antMatchers("/**").permitAll()
+                        .antMatchers("/api/test/public").permitAll()                // dostępny dla każdego
+                        .antMatchers("/api/test/anyone").authenticated()            // dla dowolnej osoby która jest zalogowana
+                        .antMatchers("/api/test/moderator").hasRole("MODERATOR")    // dla dowolnej osoby która jest zalogowana z rolą moderator
+                        .antMatchers("/api/test/admin").hasRole("ADMIN")            // dla dowolnej osoby która jest zalogowana z rolą admin
                         .anyRequest().authenticated()
                 .and()
                     .addFilter(loginFilter(authenticationManager(), applicationUserMapper, objectMapper))       // /login
@@ -62,10 +66,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+//        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+//        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+//        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+//        auth.authenticationProvider(daoAuthenticationProvider);
 
-        auth.authenticationProvider(daoAuthenticationProvider);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
+
 }
